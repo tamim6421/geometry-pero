@@ -24,9 +24,9 @@
                     <h2 class="card-title">Triangle</h2>
                     <p>Area (A) = 0.5 *b.h * h </p>  
                      <p>
-                        <input class="border bg-gray-200 w-20 px-1" type="text" name="" placeholder="base" id="trianglBase">
+                        <input class="border bg-gray-200 w-20 px-1" type="number" name="" placeholder="base" id="trianglBase">
                         <span class="ml-2">cm</span>
-                        <input class="border bg-gray-200 w-20 px-1" type="text" name="" placeholder="height" id="triangleHeight">
+                        <input class="border bg-gray-200 w-20 px-1" type="number" name="" placeholder="height" id="triangleHeight">
                         <span class="ml-2">cm</span>
                      </p>     
                     <p class="text-2xl"> Area: <span id="triangleArea">0</span> cm<sup>2</sup> </p>
@@ -41,7 +41,7 @@
             <!-- rectangle -->
 
             <div class="card bg-base-100 shadow-xl">
-                <figure><img src="./images/rectangle.png" alt="Shoes" /></figure>
+                <figure><img class="p-2" src="./images/rectangle.png" alt="Shoes" /></figure>
                 <div class="card-body">
                     <h2 class="card-title">Rectangle</h2>
                     <p>Area (A) = w * l </p>  
@@ -60,38 +60,65 @@
                 </div>
             </div>
 
+            <!-- parallelogram -->
             <div class="card bg-base-100 shadow-xl">
-                <figure><img src="./images/rectangle.png" alt="Shoes" /></figure>
+                <figure><img src="./images/parallelogram.png" alt="Shoes" /></figure>
                 <div class="card-body">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions justify-end">
-                        <button class="btn btn-primary">Buy Now</button>
+                    <h2 class="card-title">Parallelogram</h2>
+                    <p>Area (A) = b * h </p>  
+                     <p>
+                        <input class="border bg-gray-200 w-20 px-1" type="text" name="" placeholder="base" id="paraBase">
+                        <span class="ml-2">cm</span>
+                        <input class="border bg-gray-200 w-20 px-1" type="text" name="" placeholder="height" id="paraHeight">
+                        <span class="ml-2">cm</span>
+                     </p>     
+                    <p class="text-2xl"> Area: <span id="paraArea">0</span> cm<sup>2</sup> </p>
+                        
+                        
+                    <div class="card-actions">
+                        <button onclick="calculatePara()" id="" class="btn btn-primary w-full">Calculate</button>
                     </div>
                 </div>
             </div>
 
+
+            <!-- Ellipse -->
             <div class="card bg-base-100 shadow-xl">
-                <figure><img src="./images/rectangle.png" alt="Shoes" /></figure>
+                <figure><img src="./images/ellipse.png" alt="Shoes" /></figure>
                 <div class="card-body">
-                    <h2 class="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div class="card-actions justify-end">
-                        <button class="btn btn-primary">Buy Now</button>
+                    <h2 class="card-title">Ellipse</h2>
+                    <p>Area (A) = π ab </p>  
+                     <p>
+                        <input class="border bg-gray-200 w-20 px-1" type="text" name="" placeholder="large" id="ellipseRedius1">
+                        <span class="ml-2">cm</span>
+                        <input class="border bg-gray-200 w-20 px-1" type="text" name="" placeholder="height" id="ellipseRedius2">
+                        <span class="ml-2">cm</span>
+                     </p>     
+                    <p class="text-2xl"> Area: <span id="ellipseArea">0</span> cm<sup>2</sup> </p>
+                        
+                        
+                    <div class="card-actions">
+                        <button onclick="calculateEllipse()" id="" class="btn btn-primary w-full">Calculate</button>
                     </div>
                 </div>
             </div>
+
+          
 
         </div>
         <!-- area calculator -->
-        <div class="w-80">
-            <h2>Area Calculator</h2>
+        <div class="w-80 border ">
+            <h2 class="text-center text-2xl font-bold">Area Calculator</h2>
+            <div class="p-3" id="calEntry">
+
+            </div>
         </div>
 
 
     </main>
 
     <script>
+        //  <!-- triangle -->
         function calculateTriangle(){
             const baseField = document.getElementById('trianglBase').value
             const base = parseFloat(baseField)
@@ -103,18 +130,88 @@
 
             const triangleArea = document.getElementById('triangleArea')
             triangleArea.innerText = area;
+            addToCalculation('Triangle', area)
         }
-
+        // rectangle
         function calculateRectangle(){
             const widthField = document.getElementById('rectanglewith').value
             const width = parseFloat(widthField)
             
             const rectangleLeng = document.getElementById('rectangleLeng').value
             const length = parseFloat(rectangleLeng)
+
+            // validation check
+            if(isNaN(width) || isNaN(length)){
+                alert ('input a number')
+                return
+            }
             const area = width * length
             const rectriangleArea = document.getElementById('rectriangleArea')
             rectriangleArea.innerText = area
+            addToCalculation('Rectangle', area)
+            
         }
+
+        // functional way 
+        // get input value and convert string to number 
+        function getInputValue(fieldId){
+            const inputField = document.getElementById(fieldId)
+            const InputValue = inputField.value;
+            const value = parseFloat(InputValue)
+            return value;
+        }
+        // set innerText function 
+        function setInnerText(elementId, area){
+            const element = document.getElementById(elementId)
+            element.innerText = area;
+        }
+      
+
+
+        // parallelogram
+        function calculatePara(){
+            const base = getInputValue("paraBase")
+            const height = getInputValue('paraHeight')
+            if(isNaN(base) || isNaN(height)){
+                alert('please input a number')
+                return
+            }
+            const area = base * height
+            setInnerText('paraArea', area)
+            addToCalculation('Parallelogram', area)
+        }
+
+        // Ellipse
+        function calculateEllipse(){
+            const majorRadius = getInputValue('ellipseRedius1') 
+            const minorRadius = getInputValue('ellipseRedius2') 
+            if(isNaN(majorRadius) || isNaN(minorRadius)){
+                alert('please input a number')
+                return
+            }
+            const area = 3.14 * majorRadius * minorRadius
+            const tofix = area.toFixed(2)
+
+            setInnerText("ellipseArea", tofix)
+            addToCalculation('Ellipse', tofix)
+        }
+
+          // add to calculation entry function 
+        /* 
+        find the element where to add the dynamic html
+        */
+        function addToCalculation(areaType, area){
+            console.log(areaType + ' '+ area)
+            const calculationEntry = document.getElementById('calEntry')
+            const count = calculationEntry.childElementCount
+
+            const p = document.createElement('p');
+            p.classList.add('my-4');
+            p.innerHTML = `${count + 1}. ${areaType} ${area} cm<sup>2</sup> <button class="btn-sm btn-primary">Convert</button>    `
+            calculationEntry.appendChild(p)
+        }
+
+
     </script>
 </body>
 
